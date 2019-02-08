@@ -1,4 +1,6 @@
-# React Starter
+# React SGT
+
+> Student Grade Table project built in ReactJS.
 
 > This repo contains boilerplate code to aid in the creation of a new React app with Redux. Follow the below setup instructions to get started.
 
