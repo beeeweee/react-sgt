@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 import 'materialize-css/dist/js/materialize.min';
 import '../assets/css/app.scss';
+import axios from 'axios';
 import Table from './table';
 import AddStudent from './add_student';
 import studentData from '../data/get_all_students';
@@ -40,13 +41,16 @@ class App extends Component {
         });
     }
 
-    getStudentData() {
+    getStudentData() { //updates the state of the component with the data
+        axios.get('http://localhost/server/getstudentlist.php').then((response) => {
+            console.log('Server Response', response.data.data);
         this.setState({
-            students: studentData
+            students: response.data.data
         });
+    });
     }
 
-    render() {
+    render() { //will pass an array of objects into the table 
         return (
             <div>
                 <h1 className="center">SGT</h1>
