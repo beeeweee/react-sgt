@@ -36,6 +36,7 @@ class App extends Component {
 
     addStudent = (student) => {
         console.log('Add Student: ', student);
+        const resp = axios.post('http://localhost/server/createstudent.php');
         // student.id = randomString();
         // this.setState({
         //     students: [...this.state.students, student]//Taking the current list of states and placing them in the array and then taking the new parameter and adding the newly filled out student
