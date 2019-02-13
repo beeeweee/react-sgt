@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 import 'materialize-css/dist/js/materialize.min';
 import '../assets/css/app.scss';
+import React, { Component } from 'react';
 import axios from 'axios';
 import Table from './table';
 import AddStudent from './add_student';
@@ -35,10 +35,11 @@ class App extends Component {
     }
 
     addStudent = (student) => {
-        student.id = randomString();
-        this.setState({
-            students: [...this.state.students, student]//Taking the current list of states and placing them in the array and then taking the new parameter and adding the newly filled out student
-        });
+        console.log('Add Student: ', student);
+        // student.id = randomString();
+        // this.setState({
+        //     students: [...this.state.students, student]//Taking the current list of states and placing them in the array and then taking the new parameter and adding the newly filled out student
+        // });
     }
 
     getStudentData() { //updates the state of the component with the data
