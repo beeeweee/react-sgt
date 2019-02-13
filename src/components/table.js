@@ -2,9 +2,23 @@ import React, { Component } from 'react';
 import StudentRow from './student_row';
 
 const Table = (props) => {
-    const studentRow = props.studentList.map((student) => { //props.studentList = attr and then pulls the value
-        return <StudentRow delete={props.deleteStudent} key={student.id} student={student} />
-    });
+
+    const { studentList } = props;
+    let studentRows = [];
+
+    if(Array.isArray(studentList) && studentList.length){
+        studentRows = props.studentList.map((student) => { //props.studentList = attr and then pulls the value
+            return <StudentRow delete={props.deleteStudent} key={student.id} student={student} />
+        });
+    } else {
+        studentRows.push(
+            <tr>
+                <td colSpan="4">
+                    <h4 className="center grey-text">No Student Data Available</h4>
+                </td>
+            </tr>
+        )
+    }
 
     return (
         <table>
@@ -17,7 +31,7 @@ const Table = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {studentRow}
+                {studentRows}
             </tbody>
         </table>
     );
