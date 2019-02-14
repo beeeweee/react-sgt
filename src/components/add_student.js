@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import {Link} from 'react-router-dom';
+import { formatPostData } from '../helpers';
 
 class AddStudent extends Component {
     //input name must match the state property name
@@ -10,15 +13,29 @@ class AddStudent extends Component {
         notes: '',
     }
 
+    addStudent = async (student) => {
 
-    handleSubmit = (event) => {
+
+
+        this.getStudentData();
+
+        // student.id = randomString();
+        // this.setState({
+        //     students: [...this.state.students, student]//Taking the current list of states and placing them in the array and then taking the new parameter and adding the newly filled out student
+        // });
+
+    }
+
+    handleSubmit = async (event) => {
         event.preventDefault();
 
         console.log('Student Info', this.state);
 
-        this.props.add(this.state);
+        const formattedStudent = formatPostData(this.state);
 
-        this.resetForm();
+        await axios.post('/server/createstudent.php', formattedStudent);
+
+        this.props.history.push('/');
     }
 
     resetForm = () => {
@@ -58,49 +75,61 @@ class AddStudent extends Component {
 
     render() {
         const { name, course, grade, instructor, notes } = this.state;
+        console.log('Add Student :', this.props)
 
         return (
-            <form onSubmit={this.handleSubmit}>
+            <div>
+                <h1 className="center">Add Student</h1>
                 <div className="row">
-                    <div className="col input-field s10 offset-s1">
-                        <input onChange={this.handleKeyPress} name="name" type="text" id="name" value={name} />
-                        <label htmlFor="name">Name</label>
+                    <div className="col s12 right-align">
+                        <Link className="btn blue" to="/">Home</Link>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col input-field s10 offset-s1">
-                        <input onChange={this.handleKeyPress} name="course" type="text" id="course" value={course} />
-                        <label htmlFor="course">Course</label>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col input-field s10 offset-s1">
-                        <input onChange={this.handleKeyPress} name="grade" type="text" id="grade" value={grade} />
-                        <label htmlFor="Grade">Grade</label>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col input-field s10 offset-s1">
-                        <input onChange={this.handleKeyPress} name="instructor" type="text" id="instructor" value={instructor} />
-                        <label htmlFor="Instructor">Instructor</label>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col input-field s10 offset-s1">
-                        <input onChange={this.handleKeyPress} name="notes" type="text" id="notes" value={notes} />
-                        <label htmlFor="Notes">Notes</label>
-                    </div>
-                </div>
+                </div>  
+                
 
-                <div className="row">
-                    <div className="col s6 center">
-                        <button onClick={this.resetForm} type="button" className="btn red darken-2 waves-effect waves-light">Clear</button>
+
+                <form onSubmit={this.handleSubmit}>
+                    <div className="row">
+                        <div className="col input-field s10 offset-s1">
+                            <input onChange={this.handleKeyPress} name="name" type="text" id="name" value={name} />
+                            <label htmlFor="name">Name</label>
+                        </div>
                     </div>
-                    <div className="col s6 center">
-                        <button className="btn green darken-2">Add</button>
+                    <div className="row">
+                        <div className="col input-field s10 offset-s1">
+                            <input onChange={this.handleKeyPress} name="course" type="text" id="course" value={course} />
+                            <label htmlFor="course">Course</label>
+                        </div>
                     </div>
-                </div>
-            </form>
+                    <div className="row">
+                        <div className="col input-field s10 offset-s1">
+                            <input onChange={this.handleKeyPress} name="grade" type="text" id="grade" value={grade} />
+                            <label htmlFor="Grade">Grade</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col input-field s10 offset-s1">
+                            <input onChange={this.handleKeyPress} name="instructor" type="text" id="instructor" value={instructor} />
+                            <label htmlFor="Instructor">Instructor</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col input-field s10 offset-s1">
+                            <input onChange={this.handleKeyPress} name="notes" type="text" id="notes" value={notes} />
+                            <label htmlFor="Notes">Notes</label>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col s6 center">
+                            <button onClick={this.resetForm} type="button" className="btn red darken-2 waves-effect waves-light">Clear</button>
+                        </div>
+                        <div className="col s6 center">
+                            <button className="btn green darken-2">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         );
     }
 }
